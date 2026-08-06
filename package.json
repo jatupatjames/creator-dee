@@ -2,13 +2,22 @@
   "name": "creator-dee",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "auth:line": "PW_AUTH=1 npx playwright test --project=auth-setup --headed",
+    "test": "npx playwright test",
+    "test:auth": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.1.2"
+    "@types/node": "^26.1.2",
+    "@types/pg": "^8.20.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.22.0"
   }
 }

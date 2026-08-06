@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import { creatorDeeEnvironment } from './data/environment';
+
+const authFile = 'playwright/.auth/line-user.json';
+const authSetupEnabled = process.env.PW_AUTH === '1';
 
 /**
  * Read environment variables from file.
@@ -26,18 +30,33 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: creatorDeeEnvironment.baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'on',
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      testDir: './main',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: authFile,
+      },
     },
+    ...(authSetupEnabled
+      ? [
+          {
+            name: 'auth-setup',
+            testDir: './setup',
+            testMatch: /.*\.setup\.ts/,
+            use: { ...devices['Desktop Chrome'] },
+          },
+        ]
+      : []),
 
     // {
     //   name: 'firefox',
