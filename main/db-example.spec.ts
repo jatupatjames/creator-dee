@@ -1,9 +1,4 @@
 import { test, expect } from "@playwright/test";
-import {
-  getUserByUsername,
-  insertTestUser,
-  deleteUser,
-} from "../functions/db.functions";
 import { closePool } from "../db/connection";
 
 test.describe("Database connection examples", () => {
@@ -33,3 +28,5 @@ test.describe("Database connection examples", () => {
     await closePool(); // release the connection pool when tests are done
   });
 });
+
+//test
